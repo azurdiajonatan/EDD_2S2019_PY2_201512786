@@ -1,12 +1,20 @@
 package proyectofinaledd2019;
 
+import java.awt.Desktop;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.swing.JOptionPane;
+
 public class AVLTree {
 
     NodeAvl root;
+    String create = "";
    
     public AVLTree(){
-        root = null;
-        String create = "";
+        root = null; 
     }
     
     public void Preorder(NodeAvl getnode){
@@ -119,6 +127,68 @@ public class AVLTree {
             root = newnode;
         }else{
             root = Insert_Place(newnode,root);
+        }
+    }
+    
+    
+    public void Graph_Avl(String image_name,AVLTree actualtree){
+        try{
+            create = "";
+            String path = image_name+".dot";
+            FileWriter fw = new FileWriter(path);
+            BufferedWriter bw = new BufferedWriter(fw);
+            try (PrintWriter outprint = new PrintWriter(bw)) {
+                outprint.print("digraph avltree{ \n");
+                outprint.write("rankdir = TB; \n");
+                outprint.write("node[shape=record,style=filled,fillcolor=tomato]; \n");
+                Create_Nodes(actualtree.root);
+                Link_Nodes(actualtree.root);
+                outprint.write(create);
+                outprint.write("\n}");
+                String command = "dot -Tjpg "+image_name+".dot -o "+image_name+".jpg";
+                Runtime.getRuntime().exec(command);
+                //Desktop.getDesktop().open(new File(image_name+".jpg"));
+            }
+        }catch(IOException ios){
+            JOptionPane.showMessageDialog(null, ios);
+        }
+    }
+    
+    private void Create_Nodes(NodeAvl actualnode){
+        try{
+            if(actualnode != null){
+                String subcontent = actualnode.getContent();
+                String factor = String.valueOf(actualnode.getFactor());
+                String height = String.valueOf(actualnode.getHeigth());
+                create += "node"+actualnode.getFilename()+" [label = \" <C0>|" + "File name: "+actualnode.getFilename()
+                          +"\\n Content: "+subcontent+"\\n FE: "+factor+"\\n Height: "+height
+                          +"\\n Timestamp: "+actualnode.getTimestamp()+"\\n User: "+actualnode.getUsername()+"|<C1>\"]; \n";
+            }
+            if(actualnode.subleft != null){
+                Create_Nodes(actualnode.subleft);
+            }
+            if(actualnode.subright != null){
+                Create_Nodes(actualnode.subright);
+            }
+        }catch(Exception ios){
+           JOptionPane.showMessageDialog(null, ios); 
+        }
+    }
+    
+    private void Link_Nodes(NodeAvl actualnode){
+        if(actualnode != null){
+            create += "node"+actualnode.getFilename();
+            create += ";\n";
+        }
+        if(actualnode.subleft != null){
+            create += "node"+actualnode.getFilename()+":C0";
+            create += "->";
+            Link_Nodes(actualnode.subleft);
+        }
+        if(actualnode.subright != null){
+            create += "node"+actualnode.getFilename()+":C1";
+            create += "->";
+            Link_Nodes(actualnode.subright);
         }
     }
     
