@@ -1,6 +1,5 @@
 package proyectofinaledd2019;
 
-
 public class HashNode {
     private String name;
     private String password;
@@ -15,7 +14,7 @@ public class HashNode {
         this.next = null;
     }
 
-    
+
     public HashNode(String code){
         this.code = code;
         this.next = null;

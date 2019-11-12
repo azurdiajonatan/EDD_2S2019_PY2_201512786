@@ -3,7 +3,6 @@ package proyectofinaledd2019;
 public class ProyectoFinalEDD2019 {
 
     
-
     public static void main(String[] args) {
         /*Stack hola = new Stack();
         hola.Insert_Node("hola");
@@ -28,21 +27,38 @@ public class ProyectoFinalEDD2019 {
         avl.Graph_Avl("holaperro", avl);
         avl.Graph_Avl("newone", avl);*/
         
+        /*
+        HashTable ts = new HashTable();
+        ts.Add_New("jonatan", "hola123");
+        ts.Add_New("rosario", "asfprq");
+        ts.Add_New("delmi", "14234fadf");
+        ts.Add_New("kevin", "1jljdsaf");
+        ts.Add_New("erick", "piu134");
+        ts.Add_New("alejandro", "pore234914");
+        ts.Add_New("melissa", "py1enf12");
+        ts.Add_New("josselyn", "dfjpe12");
+        ts.Add_New("evelyn", "vzxcvn421");
+        ts.Add_New("deimy", "anzcxpi2");
+        ts.Add_New("kex", "qerz324");
+        ts.Add_New("kimmi", "czbr31");
+        ts.Add_New("regina", "ivkj123");
+        ts.Add_New("abigail", "vqpei");
+        ts.Add_New("rebeca", "afzvnrqe3");
+       
+        System.out.println("-----------------");
+        ts.Show_Table();
+        ts.Graph_Hash();
+        */
         
-        /*Matrix mtx = new Matrix();
-        mtx.Add(4, 3, 20);
-        mtx.Add(10, 5, 21);
-        mtx.Add(5, 2, 32);
-        mtx.Add(3, 1, 43);
-        mtx.Add(2, 10, 9);
-        mtx.Add(1, 4, 20);
-        mtx.Add(10, 3, 32);
-        mtx.Add(4, 5, 100);
-        mtx.Add(10, 4, 100);
+        Matrix mtx = new Matrix();
+        mtx.Add("home", "documents");
+        mtx.Add("imagenes","nuevacarpeta");
         mtx.PrintX();
-        mtx.GraphMatrix("hola", mtx);
-        System.out.println("----------------------");
-        mtx.PrintY();*/
+        System.out.println("-----------------------------");
+        mtx.PrintY();
+        
+        Index login = new Index();
+        login.show();
         
         
     }

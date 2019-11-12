@@ -3,10 +3,10 @@ package proyectofinaledd2019;
 
 public class MatrixNode {
    
-    private int location;
-    private int folder;
-    private int father;
-    private int son;
+    private String location;
+    private String father;
+    private String son;
+    private String folder;
     AVLTree inside_tree;
     MatrixNode up;
     MatrixNode down;
@@ -14,7 +14,7 @@ public class MatrixNode {
     MatrixNode left;
       
     //HEADER
-    public MatrixNode(int location){
+    public MatrixNode(String location){
         this.location = location;
         this.up = null;
         this.down = null;
@@ -23,46 +23,46 @@ public class MatrixNode {
     }
     
     //BODY
-    public MatrixNode(int son, int father,int folder){
+    public MatrixNode(String son,String father,String folder){
         this.son = son;
         this.father = father;
         this.folder = folder;
-        //this.inside_tree = inside_tree;
+        this.inside_tree = null;
         this.up = null;
         this.down = null;
         this.right = null;
         this.left = null;
     }
 
-    public int getLocation() {
-        return location;
-    }
-
-    public void setLocation(int location) {
-        this.location = location;
-    }
-
-    public int getFolder() {
+    public String getFolder() {
         return folder;
     }
 
-    public void setFolder(int folder) {
+    public void setFolder(String folder) {
         this.folder = folder;
     }
 
-    public int getFather() {
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getFather() {
         return father;
     }
 
-    public void setFather(int father) {
+    public void setFather(String father) {
         this.father = father;
     }
 
-    public int getSon() {
+    public String getSon() {
         return son;
     }
 
-    public void setSon(int son) {
+    public void setSon(String son) {
         this.son = son;
     }
 
@@ -105,7 +105,5 @@ public class MatrixNode {
     public void setLeft(MatrixNode left) {
         this.left = left;
     }
-
-    
     
 }
