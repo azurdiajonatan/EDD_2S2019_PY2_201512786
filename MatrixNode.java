@@ -7,6 +7,7 @@ public class MatrixNode {
     private String father;
     private String son;
     private String folder;
+    private int position;
     AVLTree inside_tree;
     MatrixNode up;
     MatrixNode down;
@@ -14,8 +15,9 @@ public class MatrixNode {
     MatrixNode left;
       
     //HEADER
-    public MatrixNode(String location){
+    public MatrixNode(String location,int position){
         this.location = location;
+        this.position = position;
         this.up = null;
         this.down = null;
         this.right = null;
@@ -34,6 +36,16 @@ public class MatrixNode {
         this.left = null;
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    
+    
     public String getFolder() {
         return folder;
     }

@@ -50,15 +50,18 @@ public class ProyectoFinalEDD2019 {
         ts.Graph_Hash();
         */
         
+        
         Matrix mtx = new Matrix();
-        mtx.Add("home", "documents");
-        mtx.Add("imagenes","nuevacarpeta");
+        mtx.Add("/Mis_Documentos/Segundo_Semestre/EDD");
         mtx.PrintX();
         System.out.println("-----------------------------");
         mtx.PrintY();
+        mtx.GraphMatrix("mtx", mtx);
         
-        Index login = new Index();
-        login.show();
+        
+        
+        //Index login = new Index();
+        //login.show();
         
         
     }
