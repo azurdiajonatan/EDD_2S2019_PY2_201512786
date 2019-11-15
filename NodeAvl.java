@@ -88,5 +88,7 @@ public class NodeAvl {
     public void setSubright(NodeAvl subright) {
         this.subright = subright;
     }
+
+    
     
 }

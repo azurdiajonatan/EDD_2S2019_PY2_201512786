@@ -15,7 +15,7 @@ public class AVLTree {
    
     public AVLTree(){
         root = null; 
-    }
+    } 
     
     public void Preorder(NodeAvl getnode){
         if(getnode != null){
@@ -34,12 +34,12 @@ public class AVLTree {
     }
     
     private void update_height(NodeAvl actualnode){
-        if(actualnode.subleft == null && actualnode.subright != null){
+        if((actualnode.subleft == null) && (actualnode.subright != null)){
             actualnode.setHeigth(actualnode.subright.getHeigth()+1);
-        }else if(actualnode.subright == null && actualnode.subleft != null){
+        }else if((actualnode.subright == null) && (actualnode.subleft != null)){
             actualnode.setHeigth(actualnode.subleft.getHeigth()+1);
         }else{
-            actualnode.setHeigth(Math.max(Get_Height(actualnode.subleft), Get_Height(actualnode.subright)+1));
+            actualnode.setHeigth(Math.max(Get_Height(actualnode.subleft), Get_Height(actualnode.subright))+1);
         }
     }
     
@@ -121,8 +121,8 @@ public class AVLTree {
         return assistand;
     }
     
-    public void Insert_New_Node(String hola){
-        NodeAvl newnode = new NodeAvl(hola,"","","");
+    public void Insert_New_Node(String filename){
+        NodeAvl newnode = new NodeAvl(filename,"","","");
         if(root == null){
             root = newnode;
         }else{

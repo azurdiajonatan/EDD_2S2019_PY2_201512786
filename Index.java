@@ -1,22 +1,28 @@
 package proyectofinaledd2019;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author jonat
- */
 public class Index extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Index
-     */
+    HashTable newtable;
+    Stack newstack;
+    
     public Index() {
         initComponents();
+        newtable = new HashTable();
+        newstack = new Stack();
+    }
+    
+    public Index(HashTable actualtable,Stack actualstack){
+        initComponents();
+        this.newtable = actualtable;
+        this.newstack = actualstack;
     }
 
     /**
@@ -35,6 +41,7 @@ public class Index extends javax.swing.JFrame {
         logbutton = new javax.swing.JButton();
         signbutton = new javax.swing.JButton();
         logpassword = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EDD Drive");
@@ -49,8 +56,25 @@ public class Index extends javax.swing.JFrame {
         jLabel3.setText("Password");
 
         logbutton.setText("Login");
+        logbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logbuttonActionPerformed(evt);
+            }
+        });
 
         signbutton.setText("Sign Up");
+        signbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signbuttonActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,11 +96,17 @@ public class Index extends javax.swing.JFrame {
                         .addComponent(logbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(logpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(93, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addGap(17, 17, 17)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -95,6 +125,35 @@ public class Index extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void logbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logbuttonActionPerformed
+       if(loguser.getText().equalsIgnoreCase("admin")){
+           if(logpassword.getText().equalsIgnoreCase("admin")){
+               Admin call = new Admin(newtable,newstack);
+               call.show();
+               this.dispose();
+           }else{
+               JOptionPane.showMessageDialog(null,"Usuario incorrecto");
+           }
+       }else try {
+           if(newtable.Verify_user(loguser.getText(),getHexString(getSha256(logpassword.getText().replace(" ",""))))==true){
+               System.out.println(loguser.getText());
+           }
+       } catch (NoSuchAlgorithmException ex) {
+           Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }//GEN-LAST:event_logbuttonActionPerformed
+
+    private void signbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signbuttonActionPerformed
+       Signup sp = new Signup(newtable,newstack);
+       sp.show();
+       this.dispose();
+    }//GEN-LAST:event_signbuttonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.out.println("-----------------------------");
+        newtable.Show_Table();
+        newtable.Graph_Hash();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,6 +191,7 @@ public class Index extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -140,4 +200,20 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JTextField loguser;
     private javax.swing.JButton signbutton;
     // End of variables declaration//GEN-END:variables
+    private  byte[] getSha256(String string_input) throws NoSuchAlgorithmException{
+        MessageDigest message = MessageDigest.getInstance("SHA-256");
+        return message.digest(string_input.getBytes(StandardCharsets.UTF_8));
+    }
+    
+    private  String getHexString(byte[] new_hash){
+        BigInteger number = new BigInteger(1,new_hash);
+        StringBuilder string_hex = new StringBuilder(number.toString(16));
+        while(string_hex.length() < 32){
+            string_hex.insert(0,'0');
+        }
+        return string_hex.toString();
+    }
+
+
+
 }

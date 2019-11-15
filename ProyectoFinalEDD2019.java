@@ -53,15 +53,17 @@ public class ProyectoFinalEDD2019 {
         
         Matrix mtx = new Matrix();
         mtx.Add("/Mis_Documentos/Segundo_Semestre/EDD");
+        mtx.Add("/Mis_Videos/Videos_Musicales/Rock");
+        mtx.Add("/Mis_Videos/Videos_Musicales/POP");
+        mtx.Add("/Mis_Videos/Videos_Musicales/EDD");
+        
         mtx.PrintX();
         System.out.println("-----------------------------");
         mtx.PrintY();
         mtx.GraphMatrix("mtx", mtx);
         
-        
-        
-        //Index login = new Index();
-        //login.show();
+        Index login = new Index();
+        login.show();
         
         
     }

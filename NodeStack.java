@@ -2,36 +2,18 @@ package proyectofinaledd2019;
 
 public class NodeStack {
 
-    private String user;
-    private String action;
     private String date;
-    private String namefile;
+    private String time;
     private String description;
+    private String user;
     NodeStack next;
     
-    public NodeStack(String user,String action,String date,String namefile,String description){
-        this.user = user;
-        this.action = action;
+    public NodeStack(String date,String time,String description,String user){
         this.date = date;
-        this.namefile = namefile;
+        this.time = time;
         this.description = description;
-        this.next = null;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
         this.user = user;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
+        this.next = null;
     }
 
     public String getDate() {
@@ -42,12 +24,12 @@ public class NodeStack {
         this.date = date;
     }
 
-    public String getNamefile() {
-        return namefile;
+    public String getTime() {
+        return time;
     }
 
-    public void setNamefile(String namefile) {
-        this.namefile = namefile;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getDescription() {
@@ -57,5 +39,23 @@ public class NodeStack {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public NodeStack getNext() {
+        return next;
+    }
+
+    public void setNext(NodeStack next) {
+        this.next = next;
+    }
+
+    
     
 }

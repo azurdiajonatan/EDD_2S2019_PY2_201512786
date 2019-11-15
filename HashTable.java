@@ -196,7 +196,7 @@ public class HashTable {
                 pw.write("digraph users{\n");
                 pw.write("rankdir = LR;\n");
                 pw.write("node[shape=record,fontsize=9];\n");
-                principalvector += "node0 [ label = \"";
+                principalvector += "node0 [ shape = record, width = 2, height = 35 label = \"";
                 for(int i = 0;i<actual_size;i++){
                     principalvector += "<f"+String.valueOf(i)+"> "+String.valueOf(i)+"|" ;
                 }
