@@ -25,25 +25,43 @@ public class AVLTree {
         }
     }
     
-    private int Get_Height(NodeAvl actualnode){
-        if(actualnode == null){
-            return -1;
-        }else{
-            return actualnode.getHeigth();
+    public void Inorder(NodeAvl getnode){
+        if(getnode != null){
+            Inorder(getnode.subleft);
+            System.out.println(getnode.getFilename());
+            Inorder(getnode.subright);
         }
     }
     
-    private void update_height(NodeAvl actualnode){
-        if((actualnode.subleft == null) && (actualnode.subright != null)){
-            actualnode.setHeigth(actualnode.subright.getHeigth()+1);
-        }else if((actualnode.subright == null) && (actualnode.subleft != null)){
-            actualnode.setHeigth(actualnode.subleft.getHeigth()+1);
+    /*
+    private void Re_Factor(NodeAvl actualnode){
+        if(actualnode != null){
+            Re_Factor(actualnode.subleft);
+            Re_Factor(actualnode.subright);
+            update_factor(actualnode);
+        }
+    }
+    */
+    private int Get_Factor(NodeAvl actualnode){
+        if(actualnode == null){
+            return 0;
         }else{
-            actualnode.setHeigth(Math.max(Get_Height(actualnode.subleft), Get_Height(actualnode.subright))+1);
+            return actualnode.getFactor();
         }
     }
     
     private void update_factor(NodeAvl actualnode){
+        if((actualnode.subleft == null) && (actualnode.subright != null)){
+            actualnode.setFactor(actualnode.subright.getFactor()+1);
+        }else if((actualnode.subright == null) && (actualnode.subleft != null)){
+            actualnode.setFactor(actualnode.subleft.getFactor()+1);
+        }else{
+            actualnode.setFactor(Math.max(Get_Factor(actualnode.subleft), Get_Factor(actualnode.subright))+1);
+        }
+    }
+    
+    /*
+    private void update_Height(NodeAvl actualnode){
         if(actualnode.subleft == null && actualnode.subright == null){
             actualnode.setFactor(0);
         }else if(actualnode.subright == null && actualnode.subleft != null ){
@@ -54,13 +72,13 @@ public class AVLTree {
             actualnode.setFactor(actualnode.subright.getFactor()-actualnode.subleft.getFactor());
         }
     }
-    
+    */
     private NodeAvl NormalLeft(NodeAvl actualnode){
         NodeAvl assistand = actualnode.getSubleft();
         actualnode.subleft = assistand.getSubright();
         assistand.subright = actualnode;
-        actualnode.setHeigth(Math.max(Get_Height(actualnode.subleft),Get_Height(actualnode.subright))+1);
-        assistand.setHeigth(Math.max(Get_Height(actualnode.subleft),Get_Height(actualnode.subright))+1);
+        actualnode.setFactor(Math.max(Get_Factor(actualnode.subleft),Get_Factor(actualnode.subright))+1);
+        assistand.setFactor(Math.max(Get_Factor(actualnode.subleft),Get_Factor(actualnode.subright))+1);
         return assistand;
     }
     
@@ -68,8 +86,8 @@ public class AVLTree {
         NodeAvl assistand = actualnode.getSubright();
         actualnode.subright = assistand.getSubleft();
         assistand.subleft = actualnode;
-        actualnode.setHeigth(Math.max(Get_Height(actualnode.subleft),Get_Height(actualnode.subright))+1);
-        assistand.setHeigth(Math.max(Get_Height(actualnode.subleft),Get_Height(actualnode.subright))+1);
+        actualnode.setFactor(Math.max(Get_Factor(actualnode.subleft),Get_Factor(actualnode.subright))+1);
+        assistand.setFactor(Math.max(Get_Factor(actualnode.subleft),Get_Factor(actualnode.subright))+1);
         return assistand;
     }
     
@@ -92,7 +110,7 @@ public class AVLTree {
                 actualnode.subleft = newnode;
             }else{
                 actualnode.subleft = Insert_Place(newnode, actualnode.subleft);
-                if((Get_Height(actualnode.subleft) - Get_Height(actualnode.subright))==2){
+                if((Get_Factor(actualnode.subleft) - Get_Factor(actualnode.subright))==2){
                     if(newnode.getFilename().compareTo(actualnode.subleft.getFilename())<0){
                         assistand = NormalLeft(actualnode);
                     }else{
@@ -105,7 +123,7 @@ public class AVLTree {
                 actualnode.subright = newnode;
             }else{
                 actualnode.subright = Insert_Place(newnode, actualnode.subright);
-                if((Get_Height(actualnode.subright) - Get_Height(actualnode.subleft))==2){
+                if((Get_Factor(actualnode.subright) - Get_Factor(actualnode.subleft))==2){
                     if(newnode.getFilename().compareTo(actualnode.subright.getFilename())>0){
                         assistand = NormalRight(actualnode);
                     }else{
@@ -116,7 +134,6 @@ public class AVLTree {
         }else{
             
         }
-        update_height(actualnode);
         update_factor(actualnode);
         return assistand;
     }
@@ -130,6 +147,104 @@ public class AVLTree {
         }
     }
     
+    private void InsertModify(NodeAvl newnode){
+        if(root == null){
+            root = newnode;
+        }else{
+            root = Insert_Place(newnode, root);
+        }
+    }
+    
+    private int GetFactorBalance(NodeAvl actualnode){
+        if(actualnode == null){
+            return 0;
+        }else{
+            return Get_Factor(actualnode.subleft) - Get_Factor(actualnode.subright);
+        }
+    }
+    
+    public NodeAvl Delete_Node(NodeAvl actualnode,String filename){
+        if(actualnode == null){
+            return null;
+        }
+        if(filename.compareTo(actualnode.getFilename())<0){
+            actualnode.setSubleft(Delete_Node(actualnode.getSubleft(), filename));
+        }else if(filename.compareTo(actualnode.getFilename())>0){
+            actualnode.setSubright(Delete_Node(actualnode.getSubright(), filename));
+        }else{
+            if(actualnode.getSubleft() == null || actualnode.getSubright() == null){
+                NodeAvl assistand = null;
+                if(assistand == actualnode.subleft){
+                    assistand = actualnode.getSubright();
+                }else{
+                    assistand = actualnode.getSubleft();
+                }
+                
+                if(assistand == null){
+                    assistand = actualnode;
+                    actualnode = null;
+                }else{
+                    actualnode = assistand;
+                }
+                
+            }else{
+                NodeAvl temporal = actualnode.getSubright();
+                while(temporal.getSubleft() != null){
+                    temporal = temporal.getSubleft();
+                }
+                actualnode.setFilename(temporal.getFilename());
+                actualnode.setSubright(Delete_Node(actualnode.getSubright(),temporal.getFilename()));
+            }        
+        }
+        
+         if(actualnode == null){
+            return actualnode;
+        }
+        
+        actualnode.setFactor(Math.max(Get_Factor(actualnode.getSubleft()), Get_Factor(actualnode.getSubright()))+1);
+        int newbalance = GetFactorBalance(actualnode);
+        
+        if(newbalance > 1 && GetFactorBalance(actualnode.subleft) >=0){
+             NormalRight(actualnode);
+        }
+        
+        if(newbalance > 1 && GetFactorBalance(actualnode.subleft) <0 ){
+             DoubleLeft(actualnode);
+        }
+        
+        if(newbalance < -1 && GetFactorBalance(actualnode.subright) <=0 ){
+             NormalLeft(actualnode);
+        }
+        
+        if(newbalance < -1 && GetFactorBalance(actualnode.subright) > 0){
+             DoubleLeft(actualnode);
+        }
+        return actualnode;
+    }
+    
+    private NodeAvl Search_File(NodeAvl actualnode, String namefile){
+        if(root == null){
+            return null;
+        }else if(actualnode.getFilename().equals(namefile)){
+            return actualnode;
+        }else if(actualnode.getFilename().compareTo(namefile)<0){
+            return Search_File(actualnode.subright, namefile);
+        }else{
+            return Search_File(actualnode.subleft, namefile);
+        } 
+    }
+    
+    
+    public void Modify(NodeAvl actualnode,String filename,String newnamefile){
+        NodeAvl temporal = Search_File(actualnode, filename);
+        if(temporal != null){
+            Delete_Node(temporal, filename);
+            NodeAvl newnode = new NodeAvl(newnamefile,temporal.getContent(),temporal.getTimestamp(),temporal.getUsername());
+            InsertModify(newnode);
+        }else{
+            
+        }
+    }
     
     public void Graph_Avl(String image_name,AVLTree actualtree){
         try{

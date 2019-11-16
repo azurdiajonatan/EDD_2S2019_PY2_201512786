@@ -15,17 +15,23 @@ public class ProyectoFinalEDD2019 {
         //Index listen = new Index();
         //listen.show();
         
-        /*AVLTree avl =  new AVLTree();
-        avl.Insert_New_Node("J");
-        avl.Insert_New_Node("E");
-        avl.Insert_New_Node("M");
-        avl.Insert_New_Node("A");
+        AVLTree avl =  new AVLTree();
+        avl.Insert_New_Node("D");
+        avl.Insert_New_Node("B");
         avl.Insert_New_Node("F");
-        avl.Insert_New_Node("Q");
-        avl.Insert_New_Node("P");
-        avl.Preorder(avl.root);
+        avl.Insert_New_Node("A");
+        avl.Insert_New_Node("C");
+        avl.Inorder(avl.root);
         avl.Graph_Avl("holaperro", avl);
-        avl.Graph_Avl("newone", avl);*/
+        NodeAvl pt = avl.Delete_Node(avl.root,"F");
+        System.out.println("-----------------------------");
+        System.out.println(pt.getFilename());
+        avl.Graph_Avl("newone", avl);
+        System.out.println("-----------------------------");
+        avl.Inorder(avl.root);
+        //NodeAvl pt2 = avl.Delete_Node(avl.root,"P");
+        //NodeAvl pt3 = avl.Delete_Node(avl.root,"J");
+        //avl.Graph_Avl("newone2", avl);
         
         /*
         HashTable ts = new HashTable();
@@ -51,6 +57,7 @@ public class ProyectoFinalEDD2019 {
         */
         
         
+        /*
         Matrix mtx = new Matrix();
         mtx.Add("/Mis_Documentos/Segundo_Semestre/EDD");
         mtx.Add("/Mis_Videos/Videos_Musicales/Rock");
@@ -64,7 +71,7 @@ public class ProyectoFinalEDD2019 {
         
         Index login = new Index();
         login.show();
-        
+        */
         
     }
     
