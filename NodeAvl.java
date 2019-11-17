@@ -20,7 +20,7 @@ public class NodeAvl {
         this.timestamp = timestamp;
         this.username = username;
         this.factor = 0;
-        this.heigth = 0;
+        this.heigth = 1;
         this.subleft = null;
         this.subright = null;
     }

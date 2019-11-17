@@ -49,6 +49,7 @@ public class Cloud extends javax.swing.JFrame {
         upload = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         foldettable = new javax.swing.JTable();
+        rutaactual = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -101,6 +102,9 @@ public class Cloud extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(foldettable);
 
+        rutaactual.setText("/");
+        rutaactual.setEnabled(false);
+
         jMenu1.setText("Reports");
 
         jMenuItem1.setText("Matrix Report");
@@ -120,22 +124,29 @@ public class Cloud extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(upload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deletefolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(modifyfolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(createfolder, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(upload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(deletefolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(modifyfolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(createfolder, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(rutaactual)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rutaactual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
+                        .addGap(75, 75, 75)
                         .addComponent(createfolder)
                         .addGap(18, 18, 18)
                         .addComponent(modifyfolder)
@@ -144,16 +155,20 @@ public class Cloud extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(upload))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(4, 4, 4)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(374, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void modifyfolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyfolderActionPerformed
-        // TODO add your handling code here:
+     String newname = JOptionPane.showInputDialog("Escriba el nombre de la nueva carpeta");
+     Matrix mtx = actualuser.getNewmatrix();
+     mtx.Add(rutaactual+"newname");
+     rutaactual.setText(rutaactual.getText()+"newname"+"/");
+     ShowFolders();
     }//GEN-LAST:event_modifyfolderActionPerformed
 
     private void createfolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createfolderActionPerformed
@@ -255,6 +270,7 @@ public class Cloud extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton modifyfolder;
+    private javax.swing.JTextField rutaactual;
     private javax.swing.JButton upload;
     // End of variables declaration//GEN-END:variables
 
@@ -268,7 +284,7 @@ public class Cloud extends javax.swing.JFrame {
                 String[] save = getline.split(separator);
                 String filename = save[0];
                 String content = save[1];
-                newtree.Insert_New_Node(filename, content);
+                //newtree.Insert_New_Node(filename, content);
             }
             br.close();
         }catch(FileNotFoundException ios){
