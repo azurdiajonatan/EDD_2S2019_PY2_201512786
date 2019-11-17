@@ -5,16 +5,25 @@ public class HashNode {
     private String password;
     private String timestamp;
     private String code;
+    Matrix newmatrix;
     HashNode next;
     
     public HashNode(String name,String password,String timestamp){
         this.name = name;
         this.password = password;
         this.timestamp = timestamp;
+        this.newmatrix = new Matrix();
         this.next = null;
     }
 
+    public Matrix getNewmatrix() {
+        return newmatrix;
+    }
 
+    public void setNewmatrix(Matrix newmatrix) {
+        this.newmatrix = newmatrix;
+    }
+    
     public HashNode(String code){
         this.code = code;
         this.next = null;

@@ -112,6 +112,11 @@ public class Signup extends javax.swing.JFrame {
                        newtable.Add_New(signuser.getText().replace(" ",""),newsha);
                        newtable.Show_Table();
                        newstack.Insert_Node("Se creo un nuevo usuario",signuser.getText());
+                       HashNode getnode = newtable.ReturnUser(signuser.getText(), newsha);
+                       Cloud cld = new Cloud(newtable,newstack,getnode);
+                       cld.show();
+                       newstack.Insert_Node("Se inicio sesion: ",signuser.getText());
+                       this.dispose();
                    } catch (NoSuchAlgorithmException ex) {
                        Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
                    }

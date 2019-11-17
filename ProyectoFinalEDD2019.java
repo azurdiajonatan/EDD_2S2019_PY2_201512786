@@ -15,12 +15,13 @@ public class ProyectoFinalEDD2019 {
         //Index listen = new Index();
         //listen.show();
         
+        /*
         AVLTree avl =  new AVLTree();
-        avl.Insert_New_Node("D");
-        avl.Insert_New_Node("B");
-        avl.Insert_New_Node("F");
-        avl.Insert_New_Node("A");
-        avl.Insert_New_Node("C");
+        avl.Insert_New_Node("D","a");
+        avl.Insert_New_Node("B","a");
+        avl.Insert_New_Node("F","a");
+        avl.Insert_New_Node("A","a");
+        avl.Insert_New_Node("C","a");
         avl.Inorder(avl.root);
         avl.Graph_Avl("holaperro", avl);
         NodeAvl pt = avl.Delete_Node(avl.root,"F");
@@ -32,7 +33,7 @@ public class ProyectoFinalEDD2019 {
         //NodeAvl pt2 = avl.Delete_Node(avl.root,"P");
         //NodeAvl pt3 = avl.Delete_Node(avl.root,"J");
         //avl.Graph_Avl("newone2", avl);
-        
+        */
         /*
         HashTable ts = new HashTable();
         ts.Add_New("jonatan", "hola123");
@@ -57,21 +58,22 @@ public class ProyectoFinalEDD2019 {
         */
         
         
-        /*
-        Matrix mtx = new Matrix();
-        mtx.Add("/Mis_Documentos/Segundo_Semestre/EDD");
-        mtx.Add("/Mis_Videos/Videos_Musicales/Rock");
-        mtx.Add("/Mis_Videos/Videos_Musicales/POP");
-        mtx.Add("/Mis_Videos/Videos_Musicales/EDD");
         
-        mtx.PrintX();
-        System.out.println("-----------------------------");
-        mtx.PrintY();
-        mtx.GraphMatrix("mtx", mtx);
+        //Matrix mtx = new Matrix();
+        //mtx.Add("/Mis_Documentos/Segundo_Semestre/EDD");
+        //mtx.Add("/Mis_Videos/Videos_Musicales/Rock");
+        //mtx.Add("/Mis_Videos/Videos_Musicales/POP");
+        //mtx.Add("/Mis_Videos/Videos_Musicales/EDD");
+        
+        //mtx.PrintX();
+        //System.out.println("-----------------------------");
+        //mtx.PrintY();
+        // mtx.GraphMatrix("mtx", mtx);
+        
         
         Index login = new Index();
         login.show();
-        */
+        
         
     }
     

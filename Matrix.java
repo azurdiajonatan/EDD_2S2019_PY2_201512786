@@ -52,27 +52,40 @@ public class Matrix {
             }
             String node_name = "/"+getfather+"/"+getson;
             MatrixNode newnode = new MatrixNode(getson,getfather,node_name);
-            if(Search_Folder(newnode)== null){
+            if(VerifyXY(newnode)==false){
                 AddBodyX(newnode);
+            }else{
+                MatrixNode newson = Extra_Add(newnode.getSon());
+                //System.out.println(newson.getLocation()+"<------------ aqui");
+                position++;
+                Add_ExtraX(newson, newnode);
             }  
         }
     }
     
     private boolean VerifyXY(MatrixNode newnode){
         boolean exist = false;
-        if(Search_Son(newnode.getSon())!=null){
-            
+        MatrixNode temporal = Search_Son(newnode.getSon());
+        if(temporal!=null){
+            MatrixNode assistand = temporal.down;
+            if(assistand != null){
+                 if(!assistand.getFather().equals(newnode.getFather())){
+                     exist = true;
+                 }
+            }
         } 
         return exist;
     }
     
-    private void Extra_Add(String extraname){
+    private MatrixNode Extra_Add(String extraname){
         MatrixNode newnodex = new MatrixNode(extraname,position);
             MatrixNode temp = head;
+            MatrixNode assistand = null;
             while(temp != null){
                 if(temp.right == null){
                     temp.right = newnodex;
                     newnodex.left = temp;
+                    assistand = newnodex;
                     break;
                 }
                 temp = temp.right;
@@ -87,9 +100,11 @@ public class Matrix {
                     break;
                 }
                 temp2 = temp2.down;
-            } 
+            }
+          
+        return assistand;
     }
-    
+        
     private MatrixNode Search_Folder(MatrixNode newnode){
         MatrixNode toreturn = null;
         MatrixNode temporal = Search_Son(newnode.getSon());
@@ -171,32 +186,12 @@ public class Matrix {
             }
         }
     }
-    
-    public void PrintX(){
-        MatrixNode actualnode = head.right;
-        while(actualnode != null){
-            System.out.print(actualnode.getLocation());
-            MatrixNode pt = actualnode.down;
-            while(pt!=null){
-                System.out.print(","+pt.getFolder());
-                pt = pt.down;
-            }
-            System.out.println();
-            actualnode = actualnode.right;
-        }
-    }
-    
-    public void PrintY(){
-        MatrixNode actualnode = head;
-        while(actualnode != null){
-            System.out.print(actualnode.getLocation());
-            MatrixNode pt = actualnode.right;
-            while(pt != null){
-                System.out.print(","+pt.getFolder());
-                pt = pt.right;
-            }
-            System.out.println();
-            actualnode = actualnode.down;
+     
+    private void Add_ExtraX(MatrixNode actualnode,MatrixNode newnode){
+        if(actualnode.down == null){
+            actualnode.down = newnode;
+            newnode.up = actualnode;
+            AddBodyY(newnode);
         }
     }
     
@@ -226,6 +221,34 @@ public class Matrix {
             }
         }
     }
+    
+     public void PrintX(){
+        MatrixNode actualnode = head.right;
+        while(actualnode != null){
+            System.out.print(actualnode.getLocation());
+            MatrixNode pt = actualnode.down;
+            while(pt!=null){
+                System.out.print(","+pt.getFolder());
+                pt = pt.down;
+            }
+            System.out.println();
+            actualnode = actualnode.right;
+        }
+    }
+    
+    public void PrintY(){
+        MatrixNode actualnode = head;
+        while(actualnode != null){
+            System.out.print(actualnode.getLocation());
+            MatrixNode pt = actualnode.right;
+            while(pt != null){
+                System.out.print(","+pt.getFolder());
+                pt = pt.right;
+            }
+            System.out.println();
+            actualnode = actualnode.down;
+        }
+    }
 
     public void GraphMatrix(String fileimage, Matrix mtx){
         try{
@@ -235,7 +258,7 @@ public class Matrix {
             String rank = "";
             String link = "";
             int i = 1;
-            String namefile = fileimage+".dot";
+            String namefile = "mtx_"+fileimage+".dot";
             FileWriter fw = new FileWriter(namefile);
             BufferedWriter bw = new BufferedWriter(fw);
             try (PrintWriter pw = new PrintWriter(bw)) {
@@ -290,9 +313,9 @@ public class Matrix {
                 temporal = mtx.head.down;
                 while(temporal != null){
                     MatrixNode pointer = temporal.right;
-                    if(pointer != null){
+                    while(pointer != null){
                         if(pointer.right == null){
-                            
+                            break;
                         }else{
                             body+= "node"+pointer.getFather()+"_"+pointer.getSon()+"-> node"+pointer.right.getFather()+"_"+pointer.right.getSon()+"[constraint=false,dir=both];\n";
                         }
@@ -347,6 +370,8 @@ public class Matrix {
                 pw.write("\n}");
                 pw.close();
             }
+            String command = "dot -Tjpg mtx_"+fileimage+".dot -o mtx_"+fileimage+".jpg";
+            Runtime.getRuntime().exec(command);
         }catch(IOException ios){
             JOptionPane.showMessageDialog(null,ios);
         }

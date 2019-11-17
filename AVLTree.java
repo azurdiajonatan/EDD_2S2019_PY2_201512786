@@ -138,8 +138,8 @@ public class AVLTree {
         return assistand;
     }
     
-    public void Insert_New_Node(String filename){
-        NodeAvl newnode = new NodeAvl(filename,"","","");
+    public void Insert_New_Node(String filename,String content){
+        NodeAvl newnode = new NodeAvl(filename,content,"","");
         if(root == null){
             root = newnode;
         }else{

@@ -167,6 +167,28 @@ public class HashTable {
         return verify;
     }
      
+    
+    public HashNode ReturnUser(String name,String password){
+       HashNode temporal = null;
+       for(int y = 0;y<actual_size;y++){
+            if(structure[y]!= null){
+                HashNode node = structure[y];
+                while(node!=null){
+                    if(node.getName().equals(name) && node.getPassword().equals(password)){
+                        temporal = node;
+                        break;
+                    }
+                    node = node.next;
+                }
+            }
+        }
+       if(temporal == null){
+           return null;
+       }else{
+           return temporal;
+       }
+    }
+    
     public void Show_Table(){
         int position = 0;
         while(position != actual_size){
