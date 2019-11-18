@@ -40,9 +40,9 @@ public class Matrix {
             */
             
             for(int x = 1;x<folder_names.size();x++){
-                    Add_HeadersX((String) folder_names.get(x)); 
-                    Add_HeadersY((String) folder_names.get(x)); 
-                    position++;
+                Add_HeadersX((String) folder_names.get(x)); 
+                Add_HeadersY((String) folder_names.get(x)); 
+                position++;
             }
             String getfather = "";
             String getson = "";
@@ -50,17 +50,42 @@ public class Matrix {
                 getfather = (String) folder_names.get(y-1);
                 getson = (String) folder_names.get(y);
             }
-            String node_name = "/"+getfather+"/"+getson;
-            MatrixNode newnode = new MatrixNode(getson,getfather,node_name);
-            if(VerifyXY(newnode)==false){
-                AddBodyX(newnode);
+            if(getfather.equals("/")){
+                String pts = getfather+getson;
+                MatrixNode newnode = new MatrixNode(getson,getfather,pts);
+                if(VerifyXY(newnode)==false){
+                    AddBodyX(newnode);
+                }
             }else{
-                MatrixNode newson = Extra_Add(newnode.getSon());
-                //System.out.println(newson.getLocation()+"<------------ aqui");
-                position++;
-                Add_ExtraX(newson, newnode);
-            }  
+               String node_name = "/"+getfather+"/"+getson;
+                MatrixNode newnode = new MatrixNode(getson,getfather,node_name);
+                if(VerifyXY(newnode)==false){
+                    AddBodyX(newnode);
+                }else{
+                    MatrixNode newson = Extra_Add(newnode.getSon());
+                    //System.out.println(newson.getLocation()+"<------------ aqui");
+                    position++;
+                    Add_ExtraX(newson, newnode);
+                } 
+            }
         }
+    }
+    
+    public MatrixNode ReturnSon(String nameson){
+        MatrixNode getnode  = null;
+        MatrixNode son = Search_Son(nameson);
+        if(son != null){
+            MatrixNode temporal = son.down;
+            if(temporal != null){
+                getnode = temporal;
+            }
+        }
+        
+        if(getnode == null){
+            return null;
+        }else{
+            return getnode;
+        }     
     }
     
     private boolean VerifyXY(MatrixNode newnode){
@@ -123,7 +148,7 @@ public class Matrix {
         }   
     }
     
-    private MatrixNode Search_Father(String fathername){
+    public MatrixNode Search_Father(String fathername){
         MatrixNode toreturn = null;
         MatrixNode actualnode = head;
         while(actualnode != null){
@@ -284,7 +309,11 @@ public class Matrix {
                 while(temporal != null){
                     MatrixNode pointer = temporal.down;
                     while(pointer != null){
-                        bodynodes += "node"+pointer.getFather()+"_"+pointer.getSon()+" [ label = \""+pointer.getFolder()+"\"];\n"; //create nodes
+                        if(pointer.getFather().equals("/")){
+                          bodynodes += "nodeh_"+pointer.getSon()+" [ label = \""+pointer.getFolder()+"\"];\n"; //create nodes   
+                        }else{
+                          bodynodes += "node"+pointer.getFather()+"_"+pointer.getSon()+" [ label = \""+pointer.getFolder()+"\"];\n"; //create nodes
+                        }
                         pointer = pointer.down;
                     }
                     temporal = temporal.right;
@@ -294,7 +323,11 @@ public class Matrix {
                 while(temporal != null){
                     MatrixNode pointer = temporal.down;
                     if(pointer != null){
-                        body += "nodeX_"+temporal.getPosition()+"-> node"+pointer.getFather()+"_"+pointer.getSon()+"[dir=both,group="+String.valueOf(i)+"];\n";
+                        if(pointer.getFather().equals("/")){
+                            body += "nodeX_"+temporal.getPosition()+"-> nodeh_"+pointer.getSon()+"[dir=both,group="+String.valueOf(i)+"];\n";
+                        }else{
+                            body += "nodeX_"+temporal.getPosition()+"-> node"+pointer.getFather()+"_"+pointer.getSon()+"[dir=both,group="+String.valueOf(i)+"];\n";
+                        }
                     }
                     i++;
                     temporal = temporal.right;
@@ -304,7 +337,12 @@ public class Matrix {
                 while(temporal != null){
                     MatrixNode pointer = temporal.right;
                     if(pointer != null){
-                        body += "nodeY_"+temporal.getPosition()+"-> node"+pointer.getFather()+"_"+pointer.getSon()+"[constraint=false,dir=both];\n";
+                        if(pointer.getFather().equals("/")){
+                            body += "nodeY_"+temporal.getPosition()+"-> nodeh_"+pointer.getSon()+"[constraint=false,dir=both];\n";
+                        }else{
+                             body += "nodeY_"+temporal.getPosition()+"-> node"+pointer.getFather()+"_"+pointer.getSon()+"[constraint=false,dir=both];\n";
+                        }
+                       
                     }
                     i++;
                     temporal = temporal.down;
@@ -317,7 +355,11 @@ public class Matrix {
                         if(pointer.right == null){
                             break;
                         }else{
-                            body+= "node"+pointer.getFather()+"_"+pointer.getSon()+"-> node"+pointer.right.getFather()+"_"+pointer.right.getSon()+"[constraint=false,dir=both];\n";
+                            if(pointer.getFather().equals("/")){
+                                 bodynodes+= "nodeh_"+pointer.getSon()+"-> node"+pointer.right.getFather()+"_"+pointer.right.getSon()+"[constraint=false,dir=both];\n";
+                            }else{
+                               bodynodes+= "node"+pointer.getFather()+"_"+pointer.getSon()+"-> node"+pointer.right.getFather()+"_"+pointer.right.getSon()+"[constraint=false,dir=both];\n";
+                            }             
                         }
                         pointer = pointer.right;
                     }
@@ -340,7 +382,11 @@ public class Matrix {
                     rank += "{ rank=same; ";
                     rank += "nodeY_"+hxnode.getPosition()+" ";
                     while(assistand != null){
-                        rank += "node"+assistand.getFather()+"_"+assistand.getSon()+" ";
+                        if(assistand.getFather().equals("/")){
+                           rank += "nodeh_"+assistand.getSon()+" ";
+                        }else{
+                           rank += "node"+assistand.getFather()+"_"+assistand.getSon()+" ";
+                        }
                         assistand = assistand.right;
                     }
                     rank += "}\n";
@@ -377,5 +423,70 @@ public class Matrix {
         }
     }
     
-    
+    public void GraphGrafo(String fileimage,Matrix mtx){
+        try{
+            String getall = "";
+            String linkall = "";
+            String namefile = "grafo_"+fileimage+".dot";
+            FileWriter fw = new FileWriter(namefile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            try (PrintWriter pw = new PrintWriter(bw)) {
+                pw.write("digraph mtx{ \n");
+                pw.write("rankdir = TB; \n");
+                pw.write("node[shape=rectangle]; \n");
+                pw.write("graph [nodesep = 0.5]; \n");
+                
+                //PRIMEROS NODOS
+                MatrixNode hxnode = mtx.head.down;
+                while(hxnode != null){
+                    if(hxnode.right != null){
+                        getall += "node_"+hxnode.getPosition()+" [ label = \"         "+hxnode.getLocation()+"         \",style=filled];\n";
+                    }
+                    
+                    hxnode = hxnode.down;
+                }
+                
+                //NODOS DEL CUERPO
+                hxnode = mtx.head.down;
+                while(hxnode != null){
+                   MatrixNode temporal = hxnode.right;
+                   while(temporal != null){
+                       MatrixNode header = temporal.up;
+                       if(!hxnode.getLocation().equals(header.getLocation())){
+                           getall += "node_"+header.getPosition()+" [ label = \" "+header.getLocation()+" \",style = filled];\n";
+                       }
+                       temporal = temporal.right;
+                   }
+                   hxnode = hxnode.down;
+                }
+                
+                //enlazar nodos
+                
+                hxnode = mtx.head.down;
+                while(hxnode != null){
+                   MatrixNode temporal = hxnode.right;
+                   while(temporal != null){
+                       MatrixNode header = temporal.up;
+                       if(hxnode.getLocation().equals(header.getLocation())){
+                           linkall += "node_"+hxnode.getPosition()+"-> node_"+header.getPosition()+";\n";
+                       }
+                       linkall += "node_"+hxnode.getPosition()+"-> node_"+header.getPosition()+";\n";
+                       temporal = temporal.right;
+                   }
+                   hxnode = hxnode.down;
+                }
+
+ 
+
+                pw.write(getall);
+                pw.write(linkall);
+                pw.write("\n}");
+                pw.close();
+                String command = "dot -Tjpg grafo_"+fileimage+".dot -o grafo_"+fileimage+".jpg";
+                Runtime.getRuntime().exec(command);
+            }
+        }catch(Exception ios){
+            JOptionPane.showMessageDialog(null, ios);
+        }
+    }
 }

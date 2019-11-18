@@ -116,7 +116,7 @@ public class Signup extends javax.swing.JFrame {
                        Cloud cld = new Cloud(newtable,newstack,getnode);
                        cld.show();
                        newstack.Insert_Node("Se inicio sesion: ",signuser.getText());
-                       this.dispose();
+                       this.setVisible(false);
                    } catch (NoSuchAlgorithmException ex) {
                        Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
                    }

@@ -1,5 +1,7 @@
 package proyectofinaledd2019;
 
+import java.util.Arrays;
+
 public class ProyectoFinalEDD2019 {
 
     
@@ -40,21 +42,26 @@ public class ProyectoFinalEDD2019 {
         gettree.Modify(gettree.root,"@","PERRO");
         gettree.Preorder(gettree.root);
         */
-        
-        //Matrix mtx = new Matrix();
-        //mtx.Add("/Mis_Documentos/Segundo_Semestre/EDD");
-        //mtx.Add("/Mis_Videos/Videos_Musicales/Rock");
-        //mtx.Add("/Mis_Videos/Videos_Musicales/POP");
-        //mtx.Add("/Mis_Videos/Videos_Musicales/EDD");
+
+        /*
+        Matrix mtx = new Matrix();
+        mtx.Add("/Mis_Documentos");
+        mtx.Add("/Mis_Videos");
+        mtx.Add("/Mis_Videos/Videos_Musicales");
+        mtx.Add("/Mis_Videos/Videos_Musicales/Rock");
+        mtx.Add("/Mis_Videos/Videos_Musicales/POP");
+        mtx.Add("/Mis_Videos/Videos_Musicales/EDD");
+        */
         
         //mtx.PrintX();
         //System.out.println("-----------------------------");
         //mtx.PrintY();
         // mtx.GraphMatrix("mtx", mtx);
+        // mtx.GraphGrafo("hola", mtx);
         
         
-        //Index login = new Index();
-        //login.show();
+        Index login = new Index();
+        login.show();
         
     }
     

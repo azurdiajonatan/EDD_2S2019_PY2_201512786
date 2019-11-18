@@ -131,9 +131,9 @@ public class AVLTree {
         return ptroot;
     }
     
-    public void Insert_New_Node(String filename,String content){
+    public void Insert_New_Node(String filename,String content,String user){
         String timestamp = GetTimesTamp();
-        NodeAvl newnode = new NodeAvl(filename,content,timestamp,"");
+        NodeAvl newnode = new NodeAvl(filename,content,timestamp,user);
         root = Insert_Node(root, newnode);
     }
     
@@ -237,7 +237,7 @@ public class AVLTree {
     public void Graph_Avl(String image_name,AVLTree actualtree){
         try{
             create = "";
-            String path = image_name+".dot";
+            String path = "avl_"+image_name+".dot";
             FileWriter fw = new FileWriter(path);
             BufferedWriter bw = new BufferedWriter(fw);
             try (PrintWriter outprint = new PrintWriter(bw)) {
@@ -248,7 +248,7 @@ public class AVLTree {
                 Link_Nodes(actualtree.root);
                 outprint.write(create);
                 outprint.write("\n}");
-                String command = "dot -Tjpg "+image_name+".dot -o "+image_name+".jpg";
+                String command = "dot -Tjpg avl_"+image_name+".dot -o avl_"+image_name+".jpg";
                 Runtime.getRuntime().exec(command);
                 //Desktop.getDesktop().open(new File(image_name+".jpg"));
             }
@@ -260,10 +260,11 @@ public class AVLTree {
     private void Create_Nodes(NodeAvl actualnode){
         try{
             if(actualnode != null){
+                String[] realname = actualnode.getFilename().split("\\.");
                 String subcontent = actualnode.getContent();
                 String factor = String.valueOf(actualnode.getFactor());
                 String height = String.valueOf(actualnode.getHeigth());
-                create += "node"+actualnode.getFilename()+" [label = \" <C0>|" + "File name: "+actualnode.getFilename()
+                create += "node"+realname[0]+" [label = \" <C0>|" + "File name: "+actualnode.getFilename()
                           +"\\n Content: "+subcontent+"\\n FE: "+factor+"\\n Height: "+height
                           +"\\n Timestamp: "+actualnode.getTimestamp()+"\\n User: "+actualnode.getUsername()+"|<C1>\"]; \n";
             }

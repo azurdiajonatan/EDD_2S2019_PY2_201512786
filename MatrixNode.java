@@ -29,7 +29,7 @@ public class MatrixNode {
         this.son = son;
         this.father = father;
         this.folder = folder;
-        this.inside_tree = null;
+        this.inside_tree = new AVLTree();
         this.up = null;
         this.down = null;
         this.right = null;
@@ -44,8 +44,6 @@ public class MatrixNode {
         this.position = position;
     }
 
-    
-    
     public String getFolder() {
         return folder;
     }
